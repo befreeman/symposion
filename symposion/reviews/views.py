@@ -96,6 +96,10 @@ def review_section(request, section_slug, assigned=False, reviewed="all"):
             speaker__user=request.user)
         reviewed = "user_not_reviewed"
 
+    queryset = queryset.filter(cancelled=False)
+    # Show proposals with least votes first, then by oldest
+    queryset = queryset.order_by("result__vote_count", "submitted")
+
     proposals = proposals_generator(request, queryset)
 
     ctx = {

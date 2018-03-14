@@ -8,14 +8,18 @@ class ProposalProxy(object):
         self.__proposal__ = proposal
 
     def __getattr__(self, attr):
-        ''' Overridden __getattr__ that hides the available speakers. '''
+        ''' Overridden getattr to anonymize speaker data '''
 
         if attr == "speaker":
-            return Parrot("Primary Speaker")
+            return Parrot("Speaker Hidden")
         elif attr == "additional_speakers":
             return None
         elif attr == "speakers":
             return self._speakers
+        elif attr == "additional_notes" :
+            return Parrot("Hidden during CFP phase 1")
+        elif attr == "additional_notes_html":
+            return Parrot("Hidden during CFP phase 1")
         else:
             return getattr(self.__proposal__, attr)
 
